@@ -23,20 +23,11 @@
 
 ## Technologies Used 🛠️
 
-- **Frontend**: HTML, CSS, JavaScript, React *(or whatever frontend framework/library you're using)*
+- **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB *(or your database of choice)*
-- **Authentication**: Passport.js, OAuth *(or your authentication method)*
+- **Database**: MongoDB
+- **Authentication**: OAuth
 - **Deployment**: Heroku
 - **Other Tools**: Spotify API, Git, npm
 
 ---
-
-## Installation 🚀
-
-To run Spotifinder locally, follow these steps:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/teddygallion/Spotifinder.git
-   cd Spotifinder
