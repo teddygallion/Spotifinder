@@ -1,0 +1,4 @@
+<form action="/users/<%= user._id %>/library/remove-track" method="POST" class="remove-track-form">
+  <input type="hidden" name="spotifyId" value="<%= track.spotifyId %>">
+  <button type="submit" class="remove-track-btn">🗑️ Remove</button>
+</form>
