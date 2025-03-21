@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+    <link rel="stylesheet" href="/css/navbar.css">
+
+  <link rel="stylesheet" href="/css/search.css">
+</head>
+<body>
+ <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
+<div class="container">
+  <h1>Search Results for "<%= query %>"</h1>
+
+  <ul>
+    <% tracks.forEach(track => { %>
+      <li>
+        <img src="<%= track.album.images[0].url %>" alt="<%= track.name %>" />
+        <div class="track-details">
+          <span class="artist-name"><%= track.artists[0].name %></span>
+          <span class="track-name"> <%= track.name %> | </span>
+          <span class="album-name"><%= track.album.name %></span>
+        </div>
+       <div id="embed-container-<%= track.id %>"></div>
+      
+      <!-- Play button -->
+       <button class="select-track-btn" data-track-id="<%= track.id %>">▶ Play Track</button>
+
+        
+        <%- include('../partials/_addToLibrary', { track: track, user: user }) %>
+       <%- include('../partials/_addToPlaylist', { track: track, playlists: playlists }) %>
+
+      </li>
+    <% }); %>
+  </ul>
+ <div id="oEmbedContainer" style="display:none;">
+    <div id="oEmbedContent"></div>
+    <button id="closeOEmbed">Close</button>
+  </div>
+  <%- include('../partials/_trackControls') %>
+  <%- include('../partials/_footer') %>
+  <script src="/js/embed.js"></script>
+  <script src="/js/formAction.js"></script>
+</body>
+</html>
