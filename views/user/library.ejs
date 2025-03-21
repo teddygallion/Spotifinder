@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Library</title>
+  <link rel="stylesheet" href="/css/library.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body>
+  <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
+<div class="container">
+  <h1>Your Music Library</h1>
+
+  <ul>
+    <% library.forEach(track => { %>
+      <li>
+        <img src="<%= track.albumArt %>" alt="<%= track.title %>" />
+        <div class="track-details">
+          <span class="artist-name"><%= track.artist %></span>
+          <span class="track-name"> <%= track.title %> | </span>
+          <span class="album-name"><%= track.album %></span>
+        </div>
+
+        <div id="embed-container-<%= track.spotifyId %>"></div>
+
+        <!-- Play button -->
+        <button class="select-track-btn" data-track-id="<%= track.spotifyId %>">▶ Play Track</button>
+
+        <%- include('../partials/_removeFromLibrary', { track: track, user: user }) %>
+      </li>
+    <% }); %>
+  </ul>
+
+  <div id="oEmbedContainer" style="display:none;">
+    <div id="oEmbedContent"></div>
+    <button id="closeOEmbed">Close</button>
+  </div>
+
+  <%- include('../partials/_trackControls') %>
+  <%- include('../partials/_footer') %>
+</div>
+  <script src="/js/embed.js"></script>
+  <script src="/js/formAction.js"></script>
+</body>
+</html>
