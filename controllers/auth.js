@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-const User = require('../models/user.js');
+const User = require('../models/User.js');
 
 router.get('/sign-up', (req, res) => {
   res.render('auth/sign-up.ejs');
@@ -19,32 +19,43 @@ router.get('/sign-out', (req, res) => {
 
 router.post('/sign-up', async (req, res) => {
   try {
+    console.log('Request Body:', req.body); // Log the incoming request data
+
     // Check if the username is already taken
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (userInDatabase) {
+      console.log('Username already taken:', req.body.username);
       return res.send('Username already taken.');
     }
-  
-    // Username is not taken already!
+
+    // Check if the email is already taken
+    const emailInDatabase = await User.findOne({ email: req.body.email });
+    if (emailInDatabase) {
+      console.log('Email already taken:', req.body.email);
+      return res.send('Email already taken.');
+    }
+
     // Check if the password and confirm password match
     if (req.body.password !== req.body.confirmPassword) {
+      console.log('Password and Confirm Password do not match');
       return res.send('Password and Confirm Password must match');
     }
-  
-    // Must hash the password before sending to the database
+
+    // Hash the password before saving to the database
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     req.body.password = hashedPassword;
-  
-    // All ready to create the new user!
-    await User.create(req.body);
-  
+
+    // Create the new user
+    const newUser = await User.create(req.body);
+    console.log('New user created:', newUser);
+
+    // Redirect to the sign-in page
     res.redirect('/auth/sign-in');
   } catch (error) {
-    console.log(error);
+    console.error('Error during sign-up:', error);
     res.redirect('/');
   }
 });
-
 router.post('/sign-in', async (req, res) => {
   try {
     // First, get the user from the database

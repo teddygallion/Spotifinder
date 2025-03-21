@@ -33,7 +33,7 @@ app.use(morgan("dev")); app.use(
     resave: false,
     saveUninitialized: true,
   })
-);
+  );
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -45,17 +45,20 @@ app.use("/tracks", trackRoutes);
 app.use("/users", userRoutes);
 app.use("/search", searchRoutes);
 app.get("/", (req, res) => {
-    Playlist.find({ isPublic: true })
-    .populate('user', 'username')     .sort({ createdAt: -1 })     .limit(10)     .then(publicPlaylists => {
-      res.render("index", { 
-        user: req.session.user,
-        publicPlaylists: publicPlaylists 
-      });
-    })
-    .catch(err => {
-      console.error("Error fetching playlists: ", err);
-      res.render("index", { user: req.session.user, publicPlaylists: [] });
+  Playlist.find({ isPublic: true })
+  .populate('user', 'username')     
+  .sort({ createdAt: -1 })     
+  .limit(10)     
+  .then(publicPlaylists => {
+    res.render("index", { 
+      user: req.session.user,
+      publicPlaylists: publicPlaylists 
     });
+  })
+  .catch(err => {
+    console.error("Error fetching playlists: ", err);
+    res.render("index", { user: req.session.user, publicPlaylists: [] });
+  });
 });
 
 app.get("/vip-lounge", (req, res) => {
