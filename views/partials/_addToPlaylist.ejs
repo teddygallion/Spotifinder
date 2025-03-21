@@ -1,0 +1,20 @@
+<form action="" method="POST" id="playlist-form">
+  
+  <input type="hidden" name="spotifyId" value="<%= track.id %>" />
+  <input type="hidden" name="title" value="<%= track.name %>" />
+  <input type="hidden" name="artist" value="<%= track.artists[0].name %>" />
+  <input type="hidden" name="album" value="<%= track.album.name %>" />
+  <input type="hidden" name="albumArt" value="<%= track.album.images[0].url %>" />
+  <input type="hidden" name="duration_ms" value="<%= track.duration_ms %>" />
+
+  
+  <label for="playlist">Select Playlist:</label>
+  <select name="playlistId" id="playlist">
+    <% playlists.forEach(playlist => { %>
+      <option value="<%= playlist._id %>"><%= playlist.name %></option>
+    <% }) %>
+  </select>
+
+  
+  <button type="submit">Add to Playlist</button>
+</form>
