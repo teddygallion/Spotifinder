@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li>
+      <a href="/playlists">Playlists</a>
+      <ul class="dropdown">
+        <% playlists.forEach(playlist => { %>
+          <li><a href="/playlists/<%= playlist._id %>"><%= playlist.name %></a></li>
+        <% }); %>
+      </ul>
+    </li>
+    <li><a href="/playlists/new">Create Playlist</a></li>
+
+    <% if (user) { %> 
+      <li><a href="/users/<%=user._id%>/library">Library</a></li>
+      <li><a href="/users/<%= user._id %>">Go to Profile</a></li>
+      <li><a href="/auth/sign-out">Sign out</a></li>
+    <% } else { %> 
+      <li><a href="/auth/sign-up">Sign up</a></li>
+      <li><a href="/auth/sign-in">Sign in</a></li>
+    <% } %>
+  </ul>
+</nav>
