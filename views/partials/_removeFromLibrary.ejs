@@ -1,4 +1,5 @@
-<form action="/users/<%= user._id %>/library/remove-track" method="POST" class="remove-track-form">
+<form action="/users/<%= user._id %>/library?_method=DELETE" method="POST" class="remove-track-form">
+  <input type="hidden" name="_method" value="DELETE"> <!-- Method override -->
   <input type="hidden" name="spotifyId" value="<%= track.spotifyId %>">
   <button type="submit" class="remove-track-btn">🗑️ Remove</button>
 </form>

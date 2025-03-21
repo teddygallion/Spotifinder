@@ -11,4 +11,7 @@ router.get("/playlists", isSignedIn, fetchPlaylists, userController.getUserPlayl
 router.get("/connect-spotify", isSignedIn, userController.connectSpotify);
 router.get("/:userId/library", isSignedIn, userController.getUserLibrary);
 router.post("/:userId/library", isSignedIn, userController.addTrackToUserLibrary)
+router.delete("/:userId/library", userController.removeTrackFromLibrary);
+
+
 module.exports = router;

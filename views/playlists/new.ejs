@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/styles.css">
+   <link rel="stylesheet" href="/css/styles.css"> 
+    <link rel="stylesheet" href="/css/playlist-form.css">
     <link rel="stylesheet" href="/css/navbar.css">
   <title>Document</title>
 </head>
@@ -11,35 +12,34 @@
 <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
 
 
-<h1>Create a New Playlist</h1>
+<div class="playlist-form-container">
+  <h2>Create Playlist</h2>
+  <form action="/playlists" method="POST" class="playlist-form">
+    <label for="name">Playlist Name:</label>
+    <input type="text" id="name" name="name" required>
 
-<form action="/playlists" method="POST">
-  
-  
-  <label for="name">Playlist Name</label>
-  <input type="text" name="name" id="name" required />
+    <label for="description">Description:</label>
+    <textarea id="description" name="description"></textarea>
 
-  
-  <label for="description">Description</label>
-  <textarea name="description" id="description"> %></textarea>
+    <div class="switch-container">
+      <label for="isPublic">Public</label>
+      <label class="switch">
+        <input type="checkbox" id="isPublic" name="isPublic">
+        <span class="slider"></span>
+      </label>
+    </div>
 
-  
-  <label for="isPublic">
-    <input type="checkbox" name="isPublic" id="isPublic" />
-    Is Public
-  </label>
+    <div class="switch-container">
+      <label for="isCollaborative">Collaborative</label>
+      <label class="switch">
+        <input type="checkbox" id="isCollaborative" name="isCollaborative">
+        <span class="slider"></span>
+      </label>
+    </div>
 
-  
-  <label for="isCollaborative">
-    <input type="checkbox" name="isCollaborative" id="isCollaborative" %> />
-    Is Collaborative
-  </label>
-
-  
-  <button type="submit">Create Playlist</button>
-</form>
-
-<a href="/playlists">Back to Playlists</a>
+    <button type="submit">Save Playlist</button>
+  </form>
+</div>
 
 <%- include('../partials/_footer') %>
 </body>

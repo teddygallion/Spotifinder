@@ -1,153 +1,170 @@
+
+.container {
+  max-width: 80%;
+  margin: 40px auto;
+  padding: 20px;
+  background: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+
+.container h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.container p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+
 .container ul {
   display: flex;
   flex-direction: column;
   list-style: none;
   padding: 0;
-  width: 50vw;
+  width: 100%;
 }
 
 .container li {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #2a2a2a;
+  border-radius: 6px;
+  transition: background 0.3s;
 }
+
+.container li:hover {
+  background: #333;
+}
+
 
 .container img {
   width: 50px;
   height: 50px;
   object-fit: cover;
-  margin-right: 10px;
+  border-radius: 6px;
+  margin-right: 15px;
 }
 
-.container .track-controls {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  display: none; 
-}
 
 .container .track-details {
-  width: 40vw;
-  height: 10vh;
-}
-
-.container #player-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container #track {
-  display: inline-block;
-  font-size: 16px;
-  word-break: break-all;
-  overflow-wrap: anywhere;
-}
-
-.container #player button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.container .track-details {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
-.container #player button:hover {
-  background-color: #45a049;
+.container .track-details span {
+  font-size: 16px;
+  color: #fff;
+}
+
+.container .track-details .artist-name {
+  color: #1db954; 
+}
+
+.container .track-details .track-name {
+  font-weight: bold;
+}
+
+.container .track-details .album-name {
+  color: #ccc;
+}
+
+
+.container button,
+.container .select-track-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #1db954;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.container button:hover,
+.container .select-track-btn:hover {
+  background: #17a347;
 }
 
 .container #pause-btn {
-  background-color: #f44336;
+  background: #f44336;
 }
 
 .container #pause-btn:hover {
-  background-color: #e53935;
+  background: #e53935;
 }
 
-.container #play-btn {
-  background-color: #4CAF50;
+
+.container a,
+.container form button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #1db954;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px 0;
+  transition: background 0.3s;
 }
 
-.container #play-btn:hover {
-  background-color: #45a049;
+.container a:hover,
+.container form button:hover {
+  background: #17a347;
 }
 
-.container iframe {
-  opacity: 80%;
+.container form button[type="submit"] {
+  background: #f44336;
 }
+
+.container form button[type="submit"]:hover {
+  background: #e53935;
+}
+
+
+.container #embed-container {
+  display: none;
+  margin-top: 10px;
+}
+
+
+.container .footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #ccc;
+}
+
 
 .container #player {
   display: flex;
   position: fixed;
-  bottom: 5px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1e1e1e;
+  padding: 10px;
+  justify-content: center;
   gap: 10px;
-  width: 100%;
+  z-index: 1000;
 }
 
-
-.container li:hover {
-  background-color: #f0f0f0;
-}
-
-
-.container .add-song-btn {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-
-.container .dropdown-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.container .dropdown-btn:hover {
-  background-color: #45a049;
-}
-
-
-.container .dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.container .dropdown-item {
-  padding: 8px 16px;
-  text-decoration: none;
-  display: block;
-  background-color: #f1f1f1;
-  border: none;
-}
-
-.container .dropdown-item:hover {
-  background-color: #ddd;
-}
-
-
-.container .dropdown-checkbox:checked + .dropdown-menu {
-  display: block;
+.container iframe {
+  opacity: 0.8;
+  border-radius: 6px;
 }

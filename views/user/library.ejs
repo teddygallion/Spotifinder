@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Library</title>
   <link rel="stylesheet" href="/css/library.css">
+  <link rel="stylesheet" href="/css/styles.css"> 
   <link rel="stylesheet" href="/css/navbar.css">
 </head>
 <body>
@@ -18,7 +19,7 @@
         <img src="<%= track.albumArt %>" alt="<%= track.title %>" />
         <div class="track-details">
           <span class="artist-name"><%= track.artist %></span>
-          <span class="track-name"> <%= track.title %> | </span>
+          <span class="track-name"> <%= track.title %> </span>
           <span class="album-name"><%= track.album %></span>
         </div>
 
@@ -32,14 +33,15 @@
     <% }); %>
   </ul>
 
-  <div id="oEmbedContainer" style="display:none;">
-    <div id="oEmbedContent"></div>
-    <button id="closeOEmbed">Close</button>
-  </div>
+
 
   <%- include('../partials/_trackControls') %>
   <%- include('../partials/_footer') %>
 </div>
+  <div id="oEmbedContainer" style="display:none;">
+    <div id="oEmbedContent"></div>
+    <button id="closeOEmbed">Close</button>
+  </div>
   <script src="/js/embed.js"></script>
   <script src="/js/formAction.js"></script>
 </body>

@@ -3,47 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-    <link rel="stylesheet" href="/public/css/styles.css">
-    <link rel="stylesheet" href="/css/navbar.css">
+  <title>Edit Playlist</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/playlist-form.css">
 </head>
 <body>
   <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
+  <div class="playlist-form-container">
+    <h2>Edit Playlist</h2>
+    <form action="/playlists/<%= playlist._id %>?_method=PUT" method="POST" class="playlist-form">
+      
+      <label for="name">Playlist Name:</label>
+      <input type="text" id="name" name="name" value="<%= playlist.name %>" required>
 
+      <label for="description">Description:</label>
+      <textarea id="description" name="description"><%= playlist.description || '' %></textarea>
 
-<h1>Edit Playlist</h1>
+      <div class="switch-container">
+        <label for="isPublic">Public</label>
+        <label class="switch">
+          <input type="checkbox" id="isPublic" name="isPublic" <%= playlist.isPublic ? 'checked' : '' %>>
+          <span class="slider"></span>
+        </label>
+      </div>
 
-<form action="/playlists/<%= playlist._id %>?_method=PUT" method="POST">
+      <div class="switch-container">
+        <label for="isCollaborative">Collaborative</label>
+        <label class="switch">
+          <input type="checkbox" id="isCollaborative" name="isCollaborative" <%= playlist.isCollaborative ? 'checked' : '' %>>
+          <span class="slider"></span>
+        </label>
+      </div>
 
-  
-  <label for="name">Playlist Name</label>
-  <input type="text" name="name" id="name" value="<%= playlist.name  %>" required />
+      <button type="submit">Save Changes</button>
+    </form>
 
-  
-  <label for="description">Description</label>
-  <textarea name="description" id="description"><%=  playlist.description %></textarea>
-
-  
-  <label for="isPublic">
-    <input type="checkbox" name="isPublic" id="isPublic" <%=  playlist.isPublic ? 'checked' : '' %> />
-    Is Public
-  </label>
-
-  
-  <label for="isCollaborative">
-    <input type="checkbox" name="isCollaborative" id="isCollaborative" <%=  playlist.isCollaborative ? 'checked' : '' %> />
-    Is Collaborative
-  </label>
-
-
-  <button type="submit">Save Changes</button>
-</form>
-
-<a href="/playlists/<%= playlist._id %>">Cancel</a>
-
-<%- include('../partials/_footer') %>
+    <a href="/playlists/<%= playlist._id %>" class="cancel-link">Cancel</a>
+  </div>
+</div>
+  <%- include('../partials/_footer') %>
 
 </body>
 </html>
-
-  

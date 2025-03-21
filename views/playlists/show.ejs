@@ -3,34 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  
+  <link rel="stylesheet" href="/css/library.css">
+  <link rel="stylesheet" href="/css/styles.css"> 
+
+  <link rel="stylesheet" href="/css/navbar.css">
+  <title><%= playlist.name %></title>
 </head>
 <body>
   <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
 
+  <div class="container">
+    <div class="playlist-info">
+      <h1><%= playlist.name %></h1>
+        <div class="playlist-desc-user">
+          <h2><%= playlist.description || "No description provided." %></h2>
+          <p>Owner: <%= playlist.user.username %></p>
+          <p>Privacy: <%= playlist.isPublic ? "Public" : "Private" %></p>
+          <p>Collaborative: <%= playlist.isCollaborative ? "Yes" : "No" %></p>
+        </div>
+        <a href="/playlists" id="back-btn">Back to Playlists</a>
+      </div>
+    <h2>Tracks</h2>
+    <ul>
+      <% playlist.tracks.forEach(track => { %>
+        <li>
+          <img src="<%= track.albumArt %>" alt="<%= track.title %>" />
+          <div class="track-details">
+            <span class="artist-name"><%= track.artist %></span>
+            <span class="track-name"> <%= track.title %> </span>
+            <span class="album-name"><%= track.album %></span>
+          </div>
 
-<h1><%= playlist.name %></h1>
-<p><%= playlist.description || "No description provided." %></p>
-<p>Owner: <%= playlist.user.username %></p>
-<p>Privacy: <%= playlist.isPublic ? "Public" : "Private" %></p>
-<p>Collaborative: <%= playlist.isCollaborative ? "Yes" : "No" %></p>
+          <div id="embed-container-<%= track.spotifyId %>"></div>
 
-<h2>Tracks</h2>
-<ul>
-  <% playlist.tracks.forEach(track => { %>
-    <li><%= track.title %> - <%= track.artist %></li>
-  <% }); %>
-</ul>
+          <!-- Play button -->
+          <button class="select-track-btn" data-track-id="<%= track.spotifyId %>">▶ Play Track</button>
 
-<a href="/playlists/<%= playlist._id %>/edit">Edit Playlist</a>
-<form action="/playlists/<%= playlist._id %>?_method=DELETE" method="POST">
-  <button type="submit">Delete Playlist</button>
-</form>
+          <%- include('../partials/_removeFromPlaylist', { track: track, playlist: playlist }) %>
+        </li>
+      <% }); %>
+    </ul>
 
-<a href="/playlists">Back to Playlists</a>
+    <div id="oEmbedContainer" style="display:none;">
+      <div id="oEmbedContent"></div>
+      <button id="closeOEmbed">Close</button>
+    </div>
+    <div class="playlist-edit-delete">
+    <a href="/playlists/<%= playlist._id %>/edit">Edit Playlist</a>
+    <form action="/playlists/<%= playlist._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete Playlist</button>
+    </form>
 
-<%- include('../partials/_footer') %>
+  </div>
 
+    <%- include('../partials/_trackControls') %>
+    <%- include('../partials/_footer') %>
+  </div>
+
+  <script src="/js/embed.js"></script>
+  <script src="/js/formAction.js"></script>
 </body>
 </html>

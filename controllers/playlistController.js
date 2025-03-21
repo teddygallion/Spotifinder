@@ -83,7 +83,7 @@ const getEditPlaylist = async (req, res) => {
          return res.status(404).send("Playlist not found.");
       }
 
-      if (playlist.user.toString() !== req.session.user._id.toString()) {
+      if (playlist.user._id.toString() !== req.session.user._id.toString()) {
          return res.status(403).send("You do not have permission to edit this playlist.");
       }
 
@@ -102,26 +102,49 @@ const getEditPlaylist = async (req, res) => {
 const updatePlaylist = async (req, res) => {
   try {
     const { name, description } = req.body;
-    req.body.isPublic = !!req.body.isPublic;
-    req.body.isCollaborative = !! req.body.isCollaborative;
-    
+    req.body.isPublic = !!req.body.isPublic; // Ensure boolean
+    req.body.isCollaborative = !!req.body.isCollaborative; // Ensure boolean
+
+    // Log the playlist ID and user for debugging
+    console.log("Playlist ID:", req.params.id);
+    console.log("Session User:", req.session.user);
+    console.log("Request Body:", req.body);
+
+    // Find the playlist by ID
     const playlist = await Playlist.findById(req.params.id);
 
-    if (!playlist) return res.status(404).send("Playlist not found.");
-    if (playlist.user.toString() !== req.user._id.toString()) return res.status(403).send("Unauthorized");
+    // Check if the playlist exists
+    if (!playlist) {
+      console.error("Playlist not found for ID:", req.params.id);
+      return res.status(404).send("Playlist not found.");
+    }
 
+    // Check if the authenticated user owns the playlist
+    if (playlist.user.toString() !== req.session.user._id.toString()) {
+      console.error("Unauthorized: User does not own this playlist.");
+      return res.status(403).send("Unauthorized");
+    }
+
+    // Update playlist properties
     playlist.name = name;
     playlist.description = description;
-    playlist.isPublic = isPublic;
-    playlist.isCollaborative = isCollaborative;
-    
+    playlist.isPublic = req.body.isPublic;
+    playlist.isCollaborative = req.body.isCollaborative;
+
+    // Save the updated playlist
     await playlist.save();
+
+    // Log the updated playlist
+    console.log("Updated Playlist:", playlist);
+
+    // Redirect to the updated playlist's page
     res.redirect(`/playlists/${playlist._id}`);
   } catch (error) {
     console.error("Error updating playlist:", error);
     res.status(500).send("Error updating playlist.");
   }
 };
+
 const addTrackToPlaylist = async (req, res) => {
   try {
     const { spotifyId, title, artist, album, albumArt, duration_ms } = req.body;

@@ -108,7 +108,26 @@ const addTrackToUserLibrary = async (req, res) => {
     res.status(500).send("Error adding track to collection.");
   }
 };
+const removeTrackFromLibrary = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { spotifyId } = req.body; // Extract track's Spotify ID from the form input
 
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Remove the track from the library
+    user.library = user.library.filter(track => track.spotifyId !== spotifyId);
+
+    await user.save();
+    res.redirect("/users/" + userId + "/library"); // Redirect back to library view
+  } catch (error) {
+    console.error("Error removing track:", error);
+    res.status(500).send("Server error");
+  }
+};
 
 const connectSpotify = (req, res) => {
   // This is a dummy route for now; later, this can be extended for Spotify OAuth
@@ -120,6 +139,7 @@ module.exports = {
   getUserProfile,
   getAddSongPage,
   getUserLibrary,
+  removeTrackFromLibrary,
   addTrackToUserLibrary,
   getUserPlaylists,
   connectSpotify
