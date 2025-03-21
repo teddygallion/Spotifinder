@@ -1,13 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById("playlist-form");
-  const select = document.getElementById('playlist');
+document.addEventListener('DOMContentLoaded', function () {
+  // Get all playlist forms
+  const forms = document.querySelectorAll('.playlist-form');
 
-  select.addEventListener('change', function() {
-    const playlistId = select.value;
-    form.action = `/playlists/${playlistId}/`; 
+  forms.forEach((form) => {
+    const select = form.querySelector('select'); // Get the dropdown inside the form
+    const updateFormAction = () => {
+      const playlistId = select.value;
+      form.action = `/playlists/${playlistId}/`; // Update the form action
+    };
+
+    // Set the initial form action
+    updateFormAction();
+
+    // Update the form action when the dropdown changes
+    select.addEventListener('change', updateFormAction);
   });
-
- 
-  const initialPlaylistId = select.value;
-  form.action = `/playlists/${initialPlaylistId}/`;
 });
