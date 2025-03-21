@@ -24,10 +24,10 @@
 ## Technologies Used 🛠️
 
 - **Frontend**: HTML, CSS, JavaScript
-- **Backend**: Node.js, Express.js
+- **Backend**: Node.js, Express.js, Axios
 - **Database**: MongoDB
-- **Authentication**: OAuth
+- **Authentication**: Bcrypt
 - **Deployment**: Heroku
-- **Other Tools**: Spotify API, Git, npm
+- **Other Tools**: Spotify API, Git
 
 ---

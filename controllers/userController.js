@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const Playlist = require("../models/Playlist");
 
-// Existing functions
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -15,13 +14,10 @@ const getAllUsers = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const userId = req.params.userId; // Get userId from the route parameter
-    const user = await User.findById(userId); // Fetch the user from the database
-    if (!user) {
+    const userId = req.params.userId;     const user = await User.findById(userId);     if (!user) {
       return res.status(404).send("User not found");
     }
-    // Pass user data to the view (e.g., profile page)
-    res.render('user/profile', { user });
+        res.render('user/profile', { user });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error fetching user profile");
@@ -39,8 +35,7 @@ const getUserPlaylists = async (req, res) => {
 };
 const getAddSongPage = async (req, res) => {
   try {
-    const playlist = await Playlist.findById(req.params.id); // Find the playlist by its ID
-    res.render('playlists/add-song', { user: req.user, playlist: playlist });
+    const playlist = await Playlist.findById(req.params.id);     res.render('playlists/add-song', { user: req.user, playlist: playlist });
   } catch (error) {
     console.log(error);
     res.status(500).send("Error retrieving playlist.");
@@ -48,18 +43,15 @@ const getAddSongPage = async (req, res) => {
 };
 const getUserLibrary = async (req, res) => {
   try {
-    // Find the user by their session ID
-    const user = await User.findById(req.session.user._id);
+        const user = await User.findById(req.session.user._id);
     
     if (!user) {
       return res.status(404).send("User not found.");
     }
 
-    // Ensure that library is always an array (even if empty)
-    const library = user.library || [];
+        const library = user.library || [];
 
-    // Render the user's library with their tracks
-    res.render('user/library', { 
+        res.render('user/library', { 
       user: req.session.user, 
       library: library
     });
@@ -73,23 +65,19 @@ const addTrackToUserLibrary = async (req, res) => {
   try {
     const { spotifyId, title, artist, album, albumArt, duration_ms } = req.body;
 
-    // Find the user by their session ID
-    const user = await User.findById(req.session.user._id);
+        const user = await User.findById(req.session.user._id);
     if (!user) {
       return res.status(404).send("User not found.");
     }
 
-    // Ensure that library is always an array (even if empty)
-    user.library = user.library || [];
+        user.library = user.library || [];
 
-    // Check if the track already exists in the user's library
-    const existingTrack = user.library.find(track => track.spotifyId === spotifyId);
+        const existingTrack = user.library.find(track => track.spotifyId === spotifyId);
     if (existingTrack) {
       return res.status(400).send("Track already exists in your collection.");
     }
 
-    // Create a new track object
-    const newTrack = {
+        const newTrack = {
       spotifyId,
       title,
       artist,
@@ -98,12 +86,10 @@ const addTrackToUserLibrary = async (req, res) => {
       duration_ms
     };
 
-    // Add the track to the user's library
-    user.library.push(newTrack);
+        user.library.push(newTrack);
     await user.save();
 
-    res.redirect(`/users/${req.session.user._id}/library`); // Redirect to the user's library page
-  } catch (error) {
+    res.redirect(`/users/${req.session.user._id}/library`);   } catch (error) {
     console.error("Error adding track to collection:", error);
     res.status(500).send("Error adding track to collection.");
   }
@@ -111,27 +97,23 @@ const addTrackToUserLibrary = async (req, res) => {
 const removeTrackFromLibrary = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { spotifyId } = req.body; // Extract track's Spotify ID from the form input
-
+    const { spotifyId } = req.body; 
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    // Remove the track from the library
-    user.library = user.library.filter(track => track.spotifyId !== spotifyId);
+        user.library = user.library.filter(track => track.spotifyId !== spotifyId);
 
     await user.save();
-    res.redirect("/users/" + userId + "/library"); // Redirect back to library view
-  } catch (error) {
+    res.redirect("/users/" + userId + "/library");   } catch (error) {
     console.error("Error removing track:", error);
     res.status(500).send("Server error");
   }
 };
 
 const connectSpotify = (req, res) => {
-  // This is a dummy route for now; later, this can be extended for Spotify OAuth
-  res.send("Connecting with Spotify...");
+    res.send("Connecting with Spotify...");
 };
 
 module.exports = {

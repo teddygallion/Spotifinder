@@ -4,9 +4,7 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  spotifyId: { type: String, unique: true, sparse: true }, // Optional Spotify linkage
-  playlists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Playlist' }], // Reference to user's playlists
-  createdAt: { type: Date, default: Date.now },
+  spotifyId: { type: String, unique: true, sparse: true },   playlists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Playlist' }],   createdAt: { type: Date, default: Date.now },
   library:[{
     spotifyId: { type: String, required: true },
     title: { type: String, required: true },

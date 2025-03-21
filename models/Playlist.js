@@ -3,8 +3,7 @@ const mongoose = require("mongoose")
 const PlaylistSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Playlist owner
-  tracks: [{
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },   tracks: [{
     spotifyId: { type: String, required: true },
     title: { type: String, required: true },
     artist: { type: String, required: true },
