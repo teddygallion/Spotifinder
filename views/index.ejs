@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+  <link rel="stylesheet" href="/css/styles.css"> 
+  <link rel="stylesheet" href="/css/navbar.css">
+  
+  <title>Home Page</title>
+</head>
+<body>
+
+  
+  <%- include('partials/_navbar', { user: user, playlists: playlists }) %>
+
+  
+  <div class="container">
+    <% if (user) { %>
+      <h1>Welcome, <%= user.username %>!</h1>
+    <% } else { %>
+      <h1>Welcome to the app, guest.</h1>
+    <% } %>
+
+    
+    <div class="search">
+      <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="Search for tracks...">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+     <h2>Public Playlists</h2>
+    <ul class="playlist-list">
+      <% if (publicPlaylists &&publicPlaylists.length > 0) { %>
+        <% publicPlaylists.forEach(playlist => { %>
+          <li>
+            <a href="/playlists/<%= playlist._id %>">
+              <strong><%= playlist.name %></strong> - Created by <%= playlist.user.username %>
+            </a>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <p>No public playlists available.</p>
+      <% } %>
+    </ul>
+  </div>
+
+  </div>
+<%-include("partials/_footer")%>
+</body>
+</html>
