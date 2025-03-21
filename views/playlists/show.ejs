@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+</head>
+<body>
+  <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
+
+
+<h1><%= playlist.name %></h1>
+<p><%= playlist.description || "No description provided." %></p>
+<p>Owner: <%= playlist.user.username %></p>
+<p>Privacy: <%= playlist.isPublic ? "Public" : "Private" %></p>
+<p>Collaborative: <%= playlist.isCollaborative ? "Yes" : "No" %></p>
+
+<h2>Tracks</h2>
+<ul>
+  <% playlist.tracks.forEach(track => { %>
+    <li><%= track.title %> - <%= track.artist %></li>
+  <% }); %>
+</ul>
+
+<a href="/playlists/<%= playlist._id %>/edit">Edit Playlist</a>
+<form action="/playlists/<%= playlist._id %>?_method=DELETE" method="POST">
+  <button type="submit">Delete Playlist</button>
+</form>
+
+<a href="/playlists">Back to Playlists</a>
+
+<%- include('../partials/_footer') %>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body>
+  <%- include('../partials/_navbar', { user: user, playlists: playlists }) %>
+
+
+<h1>Edit Playlist</h1>
+
+<form action="/playlists/<%= playlist._id %>?_method=PUT" method="POST">
+
+  
+  <label for="name">Playlist Name</label>
+  <input type="text" name="name" id="name" value="<%= playlist.name  %>" required />
+
+  
+  <label for="description">Description</label>
+  <textarea name="description" id="description"><%=  playlist.description %></textarea>
+
+  
+  <label for="isPublic">
+    <input type="checkbox" name="isPublic" id="isPublic" <%=  playlist.isPublic ? 'checked' : '' %> />
+    Is Public
+  </label>
+
+  
+  <label for="isCollaborative">
+    <input type="checkbox" name="isCollaborative" id="isCollaborative" <%=  playlist.isCollaborative ? 'checked' : '' %> />
+    Is Collaborative
+  </label>
+
+
+  <button type="submit">Save Changes</button>
+</form>
+
+<a href="/playlists/<%= playlist._id %>">Cancel</a>
+
+<%- include('../partials/_footer') %>
+
+</body>
+</html>
+
+  
